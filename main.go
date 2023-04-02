@@ -39,7 +39,7 @@ func main() {
 	}
 	defer stream.Close()
 
-	fmt.Printf("\nChatGPT: ")
+	fmt.Printf("\n")
 	for {
 		response, err := stream.Recv()
 		if errors.Is(err, io.EOF) {
