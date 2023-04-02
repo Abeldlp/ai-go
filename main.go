@@ -14,11 +14,12 @@ func main() {
 	c := openai.NewClient(os.Getenv("OPENAI_API_KEY"))
 	ctx := context.Background()
 
-	prompt := os.Args[1]
-
-	if prompt == "" {
-		fmt.Printf("No prompt provided	")
+	if len(os.Args) < 2 {
+		fmt.Println("\nError: no prompt passed")
+		return
 	}
+
+	prompt := os.Args[1]
 
 	req := openai.ChatCompletionRequest{
 		Model:     openai.GPT3Dot5Turbo,

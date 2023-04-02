@@ -16,6 +16,13 @@ The install script will compile the binary and copy it to your $GOPATH/bin direc
 
 ## Usage
 
+Before using you need to export your API key as an environment variable:
+(e.g., ~/.bashrc, ~/.zshrc)
+
+```bash
+export OPENAI_API_KEY="your_api_key_here"
+```
+
 To start using Go-AI, simply type ai followed by your prompt:
 
 ```bash
