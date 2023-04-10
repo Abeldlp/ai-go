@@ -23,8 +23,14 @@ Before using you need to export your API key as an environment variable:
 export OPENAI_API_KEY="your_api_key_here"
 ```
 
-To start using Go-AI, simply type ai followed by your prompt:
+To start using Go-AI, simply type ai and start chatting:
 
 ```bash
-$ ai "Hello, how are you?"
+$ ai
+```
+
+To simply make a question and end the program add the `--ask` flag
+
+```bash
+$ ai --ask "How to say hello in chinese?"
 ```

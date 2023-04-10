@@ -1,57 +1,29 @@
 package main
 
 import (
-	"context"
-	"errors"
+	"flag"
 	"fmt"
-	"io"
 	"os"
 
+	"github.com/Abeldlp/ai-go/option"
 	openai "github.com/sashabaranov/go-openai"
 )
 
 func main() {
-	c := openai.NewClient(os.Getenv("OPENAI_API_KEY"))
-	ctx := context.Background()
+	chatGPT := openai.NewClient(os.Getenv("OPENAI_API_KEY"))
 
-	if len(os.Args) < 2 {
-		fmt.Println("\nError: no prompt passed")
-		return
-	}
+	askPrt := flag.Bool("ask", false, "Ask a single question")
 
-	prompt := os.Args[1]
+	flag.Parse()
 
-	req := openai.ChatCompletionRequest{
-		Model:     openai.GPT3Dot5Turbo,
-		MaxTokens: 200,
-		Messages: []openai.ChatCompletionMessage{
-			{
-				Role:    openai.ChatMessageRoleUser,
-				Content: prompt,
-			},
-		},
-		Stream: true,
-	}
-	stream, err := c.CreateChatCompletionStream(ctx, req)
-	if err != nil {
-		fmt.Printf("ChatCompletionStream error: %v\n", err)
-		return
-	}
-	defer stream.Close()
-
-	fmt.Printf("\n")
-	for {
-		response, err := stream.Recv()
-		if errors.Is(err, io.EOF) {
-			fmt.Printf("\n")
+	if *askPrt {
+		if len(os.Args) < 3 {
+			fmt.Println("\nNo prompt passed")
 			return
 		}
-
-		if err != nil {
-			fmt.Printf("\nStream error: %v\n", err)
-			return
-		}
-
-		fmt.Printf(response.Choices[0].Delta.Content)
+		prompt := os.Args[2]
+		option.Ask(prompt, chatGPT)
+	} else {
+		option.Chat(chatGPT)
 	}
 }
