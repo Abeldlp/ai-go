@@ -15,8 +15,11 @@ func Chat(c *openai.Client) {
 
 	ctx := context.Background()
 
+	colorBlue := "\033[34m"
+	colorReset := "\033[0m"
+
 	fmt.Println("")
-	fmt.Println("To exit the program type: exit")
+	fmt.Println("🇬 🇴  🇨 🇭 🇦 🇹 🚀")
 
 	req := openai.ChatCompletionRequest{
 		Model:    openai.GPT3Dot5Turbo,
@@ -26,9 +29,11 @@ func Chat(c *openai.Client) {
 	for {
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Println("")
+		fmt.Println(string(colorBlue))
 		fmt.Print("You: ")
 		text, _ := reader.ReadString('\n')
 
+		fmt.Println(string(colorReset))
 		if text == "quit\n" || text == "exit\n" {
 			break
 		}
